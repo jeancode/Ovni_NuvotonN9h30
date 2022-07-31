@@ -97,6 +97,7 @@ void loop() {
 
       Nstruct = nuvoton.comnado(line); //process raw data
 
+      //This is just a play on words, does it make sense?
 
       Nstruct.id = Nstruct.id; //id assigned by the server
 
