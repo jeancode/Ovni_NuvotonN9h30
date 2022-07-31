@@ -60,7 +60,22 @@ Support GCC and MDK IDE/compilers. More information of these compiler version as
 
 Notice: carefully follow the instructions
 
-a) Download rt thread studio
+### a) Download rt thread studio
+    
+    use the following link
+    https://www.rt-thread.io/studio.html
+
+### b) Configure the environment to add the project
+
+  ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/Nuvotonconfig.gif "NK-N9H30")
+ 
+### c) project unpack download
+
+  ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/decompressImage.gif "NK-N9H30")
+ 
+### d) Open project in rt-thread Studio
+
+
 
 
 
