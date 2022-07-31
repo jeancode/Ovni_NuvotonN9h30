@@ -3,7 +3,13 @@
 ## 1. Introduction
 Nuvoton offers HMI platforms which are embedded with Nuvoton N9H MPU.  The N9H series with ARM926EJ-S core can operate at up to 300 MHz and can drive up to 1024x768 pixels in parallel port. It integrated TFT LCD controller and 2D graphics accelerator, up to 16 million colors (24-bit) LCD screen output, and provides high resolution and high chroma to deliver gorgeous display effects. It embedded up to 64 MB DDR memory, along with ample hardware storage and computing space for excellent design flexibility.
 
-[![NK-N9H30](https://i.imgur.com/B04MCCf.png "NK-N9H30")](https://i.imgur.com/B04MCCf.png "NK-N9H30")
+![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/nuvotonImage3.jpg "NK-N9H30")
+
+![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/nuvotonImage4.jpg "NK-N9H30")
+
+![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/nuvotonImage2.jpg "NK-N9H30")
+
+
 
 ### 1.1 MPU specification
 |  | Features |
@@ -49,6 +55,14 @@ Support GCC and MDK IDE/compilers. More information of these compiler version as
 | ---------- | ---------------------------- |
 | MDK        | uVision 5.25.2               |
 | GCC        | 6-2017-q1-update             |
+
+## 2.1 Compile and upload firmware
+
+Notice: carefully follow the instructions
+
+a) Download rt thread studio
+
+
 
 Notice: Please install ICE driver for development and [NuMicro_ARM9_Device_Database_Keil](https://www.nuvoton.com/resource-download.jsp?tp_GUID=SW1820201207155701).
 
