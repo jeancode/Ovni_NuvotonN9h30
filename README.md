@@ -86,11 +86,3 @@ You can use Tera Term terminate emulator (or other software) to type commands of
 
 [![Serial settings](https://i.imgur.com/5NYuSNM.png "Serial settings")](https://i.imgur.com/5NYuSNM.png "Serial settings")
 
-## 5. Purchase
-* [Nuvoton Direct](https://direct.nuvoton.com/en/numaker-hmi-n9h30)
-
-## 6. Resources
-* [Board Schematic](https://www.nuvoton.com/resource-download.jsp?tp_GUID=HL1020201117191514)
-* [Download NK-N9H30 Quick Start Guide](https://www.nuvoton.com/resource-download.jsp?tp_GUID=UG1320210329155300)
-* [Download NuWriter](https://github.com/OpenNuvoton/NUC970_NuWriter)
-* [Download Windows 32-bit 6-2017-q1-update ARM GCC](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads/6-2017-q1-update)
