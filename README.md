@@ -91,7 +91,27 @@ Notice: carefully follow the instructions
 
         #define Port_Server 3001
 
+### e) download the NuvotonProtocolServer folder
 
+In this folder you can find the server that manages the connections, in order to run the server require the nodejs tool
+
+    Use the link to download the software
+
+    https://nodejs.org/es/
+    
+#### Consider the build folder where you can find the binary to use nuwriter
+
+navigate with the console to the NuvotonProtocolServer folder and run the following command
+
+
+    npm install && node index.js
+    
+This will download the necessary modules and dependencies and run the server.
+
+    
+   ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/console.gif "NK-N9H30")
+
+    
 Notice: Please install ICE driver for development and [NuMicro_ARM9_Device_Database_Keil](https://www.nuvoton.com/resource-download.jsp?tp_GUID=SW1820201207155701).
 
 ## 3. Program firmware
