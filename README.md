@@ -73,6 +73,8 @@ Notice: carefully follow the instructions
 
 the only requirement for the system to work is an ethernet connection, the server running, the firmware loaded on the board and the nodes with the corresponding software
 
+IP addresses must be configured manually and specified in the document
+
 
 ### a) Download rt thread studio
     
