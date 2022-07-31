@@ -75,7 +75,8 @@ Notice: carefully follow the instructions
  
 ### d) Open project in rt-thread Studio
 
-
+   ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/OpenProject.gif "NK-N9H30")
+ 
 
 
 
