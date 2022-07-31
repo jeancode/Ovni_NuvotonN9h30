@@ -1,4 +1,4 @@
-const express = require('express');
+//const express = require('express');
 //llmar udp 
 const dgram = require('dgram');
 //llamar tcp socket
@@ -6,15 +6,16 @@ const readSocket = require('net');
 const deviceSocket = require('net');
 
 //llamar body parser
-const bodyParser = require('body-parser');
-//llamar nuvoton protocol
+//const bodyParser = require('body-parser');
+
+//call nuvoton protocol
 const NuvotonProtocol = require('./NuvotonProtocol');
 
 //crear app
-const app = express();
+//const app = express();
 
 
-//crear objeto nuvoton protocol
+//create obj nuvoton protocol
 const nuvotonProtocol = new NuvotonProtocol();
 
 
@@ -28,8 +29,8 @@ var decode = nuvotonProtocol.decodeComand(comandoSum);
 
 
 //implementar body parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
@@ -38,8 +39,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //readsocket listen
 var server = readSocket.createServer(function(socket) {
 
+    //data encapsulation
     var encapsuleSocketData = {ip:socket.remoteAddress,port:socket.remotePort};
-
+    
+    //add client connected to controller
     nuvotonProtocol.addItemLisstDevices(encapsuleSocketData,socket);
 
     console.log("Client");
