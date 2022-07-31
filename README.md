@@ -1,3 +1,8 @@
+
+
+![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/RtOvAr.png "NK-N9H30")
+
+
 # NK-N9H30 OVNI OS JEAN IMPERIAL
 
 In the exemplification video to observe all the processes to execute ovni  Os
@@ -119,6 +124,9 @@ This will download the necessary modules and dependencies and run the server.
     
 ## Node Control
 
+### Probably you need to know how to make a pcb with esp32 here I leave the link to the schematics
+
+    https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/esp32_Schematic.pdf
 
 ### For node control in this project use esp32 but you can use any device that supports tcp and udp protocols
 
@@ -155,9 +163,18 @@ It is configured for use with an Esp32 microcontroller with the Arduino IDE.
 
 The file explains how the protocol works and how it can be used to perform different actions.
 
+Notice: Please install Drivers https://github.com/jeancode/Ovni_NuvotonN9h30/tree/main/NuWriter  the file name is WinUSB4NuVCOM.exe
 
-    
-Notice: Please install ICE driver for development and [NuMicro_ARM9_Device_Database_Keil](https://www.nuvoton.com/resource-download.jsp?tp_GUID=SW1820201207155701).
+### important fact
+
+
+This is the correct configuration to upload the program to any memory
+
+![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/Upload%20Program.jpg "NK-N9H30")
+
+
+When you finish uploading the program, set the switches to the memory where you loaded your program, usually referred to as spi memory.
+
 
 ## 3. Program firmware
 ### 3.1 SDRAM Downloading using NuWriter
