@@ -5,11 +5,7 @@
 
 # NK-N9H30 OVNI OS JEAN IMPERIAL
 
-In the exemplification video to observe all the processes to execute ovni  Os
-
-The Exemplification video has been delayed a few hours from the publication of this document
-
-
+You must click on the following image to see the video of the internet protocol functionalities
 
 
 [![Watch the video](https://img.youtube.com/vi/mJ_wRYdByZM/maxresdefault.jpg)](https://www.youtube.com/watch?v=mJ_wRYdByZM&ab_channel=Jdecode)
