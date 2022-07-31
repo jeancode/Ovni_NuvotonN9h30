@@ -1,229 +1,249 @@
-//create class NuvotonProtocol
-class NuvotonProtocol{
+const express = require('express');
+//llmar udp 
+const dgram = require('dgram');
+//llamar tcp socket
+const readSocket = require('net');
+const deviceSocket = require('net');
 
-    constructor(){
+//llamar body parser
+const bodyParser = require('body-parser');
+//llamar nuvoton protocol
+const NuvotonProtocol = require('./NuvotonProtocol');
+
+//crear app
+const app = express();
+
+
+//crear objeto nuvoton protocol
+const nuvotonProtocol = new NuvotonProtocol();
+
+
+//create array buffer
+let arrayBuffer = [10,10,101,0];
+
+var comandoSum = nuvotonProtocol.comand(0x02,arrayBuffer);
+
+var decode = nuvotonProtocol.decodeComand(comandoSum);
+
+
+
+//implementar body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
+
+//readsocket listen
+var server = readSocket.createServer(function(socket) {
+
+    var encapsuleSocketData = {ip:socket.remoteAddress,port:socket.remotePort};
+
+    nuvotonProtocol.addItemLisstDevices(encapsuleSocketData,socket);
+
+    console.log("Client");
+
+    //todos los datos enviados del dispositivo slave deben conmezar con 0x16 seguido de la data
+    socket.on('data', function(data) {
+        console.log('data received: ' + data);
         
-        this.listDevices = [];
-        this.listDevicesMaster = [];
+        //determinar id de dispositivo
+        var idDevice = nuvotonProtocol.resumeId(encapsuleSocketData);
+
+        //verificar si exite un master conectado nuvotonProtocol.getListDevicesMaster()[0]
+        if(nuvotonProtocol.getListDevicesMaster()[0] != undefined){
+
+            var socketMaster = nuvotonProtocol.getListDevicesMaster()[0].socket;
 
 
-    }
+            //resend comand to master
+            if(data[0] == 0x16){
+                       
+                //create Uint8Array
+                var arrayBuffer = [0x16,idDevice];
 
-    //list master controls
-    addItemLisstDevicesMaster(item,socket){
+                //recorrerr data    y agregar al array buffer
+                for(var i = 2; i < data.length; i++){
+                    arrayBuffer.push(data[i]);
+                }
+            
+                //convert array to array buffer
+                arrayBuffer = new Uint8Array(arrayBuffer);
+                //enviar comando a dispositivo
+                
+                //resend info masters
+                socketMaster.write(data);
 
-        let port = item.port;
-        let ip = item.ip;
-        item.socket = socket;
-
-        //si esta basio agregarlo
-        if(this.listDevicesMaster.length == 0){
-            this.listDevicesMaster.push(item);
-        }
-
-        //recorrer lista de dispositivos
-        for(var i = 0; i < this.listDevices.length; i++){
-            //verificar si exite el dispositivo
-            if(this.listDevicesMaster[i].port == port && this.listDevicesMaster[i].ip == ip){
-                //si existe el dispositivo no se agrega
-                return;
-            }else{
-                //si no existe se agrega
-                this.listDevicesMaster.push(item);
             }
+         
         }
 
+    });
+
+    socket.on("error", function(err) {
+
+        console.log("error: " + err);
+
+        socket.end();
+    });
+
+    socket.on('close', function() {
+        nuvotonProtocol.removeDevice(socket._peername.address,socket._peername.port);
+        //console.log(nuvotonProtocol.getListDevices());
+        console.log('server disconnected');
+    });
+
+
+   
+}).listen(3000,  
+    function() {
+        console.log('server bound');
     }
-
-    //remove master device controls
-    removeMasterDevice(ip,port){
-
-        //recorrer lista de dispositivos
-        for(var i = 0; i < this.listDevicesMaster.length; i++){
-            //verificar si exite el dispositivo
-            if(this.listDevicesMaster[i].port == port && this.listDevicesMaster[i].ip == ip){
-                //si existe el dispositivo se elimina
-                this.listDevicesMaster.splice(i,1);
-            }
-        }
-    }
-
-    //return list devices conected
-    getListDevicesMaster(){
-        return this.listDevicesMaster;
-    }
-    
-    //list controls
-    addItemLisstDevices(item,socket){
-
-        let port = item.port;
-        let ip = item.ip;
-        item.socket = socket;
-
-        //si esta basio agregarlo
-        if(this.listDevices.length == 0){
-            this.listDevices.push(item);
-        }
+);
 
 
-        //recorrer lista de dispositivos
-        for(var i = 0; i < this.listDevices.length; i++){
+//readsocket 2 listen Master
+var server2 = readSocket.createServer(function(socket) {
+
+    var encapsuleSocketData = {ip:socket.remoteAddress,port:socket.remotePort};
+
+    nuvotonProtocol.addItemLisstDevicesMaster(encapsuleSocketData,socket);
 
 
-            //verificar si exite el dispositivo
-            if(this.listDevices[i].port == port && this.listDevices[i].ip == ip){
-                //si existe el dispositivo no se agrega
-                return;
-            }else{
-                //si no existe se agrega
-                this.listDevices.push(item);
-            }
-        }
+    console.log("Master conected");
+
+
+    socket.on('data', function(data) {
+
+        console.log(data);
+
+        //data array unit16arry
+        var d = new Uint16Array(data);
+
+        console.log(d);
+        
+        //procesamos comando y vertificamos cuantos clientes estan contectos
+        var decode = nuvotonProtocol.decodeComand(data);
 
         
-    }
-    //resume id 
-    resumeId(item){
-        //bucar id y port y resilver el id
-        var id;
-        for(var i = 0; i < this.listDevices.length; i++){
-            //verificar si exite el dispositivo
-            if(this.listDevices[i].port == item.port && this.listDevices[i].ip == item.ip){
-                //si existe el dispositivo se elimina
-                id = i;
-            }
+        if(decode.comand == 0x02){
+            
+            console.log("Dispositives conecteds: " + nuvotonProtocol.getListNumDevices());  
+
+ 
+            
         }
+        // 03 01 //listar dispositivos conectados
+        if(decode.comand == 0x03){
 
-        return id;
-
-    }
-
-
-    //remove device disconected
-    removeDevice(ip,port){
-
-        //recorrer lista de dispositivos
-        for(var i = 0; i < this.listDevices.length; i++){
-            //verificar si exite el dispositivo
-            if(this.listDevices[i].port == port && this.listDevices[i].ip == ip){
-                //si existe el dispositivo se elimina
-                this.listDevices.splice(i,1);
-            }
-        }
-
-    }
-
-
-    //return list devices conected
-    getListNumDevices(){
-        return this.listDevices.length;
-    }
-    //return list devices conected
-    getListDevices(){
-        return this.listDevices;
-    }
+           //listar ip de dispositivos
+           var listDevices = nuvotonProtocol.getListDevices();
     
-    //retornar device con id   
-    getDevice(id){
-        //verificar si el id 
-        if(id == undefined){
+            //optner id del primer parametro del decode data
+            var id = decode.data[0];
 
-            //verificar si exiter this.listDevices[0]
-            if(this.listDevices[id] != undefined){
+            var device =nuvotonProtocol.getDevice(id);
 
-                return this.listDevices[id];
+            //device != null
+            if(device != null){
+                //enviar comando a dispositivo
+
+
+                var  ip = device.ip.split(":")[3].split(".");
+                
+                ip.push(device.ip);
+
+                
+                //encode device ip in array buffer 0x01 ip responce data
+                var arrayBuffer = nuvotonProtocol.arrayBuffer({comand:0x01,data:ip});
+
+                console.log("enviando a: "+  ip);
+                socket.write(arrayBuffer);
+
             }else{
-                return null;
+
+                console.log("No found device");
+
+                //create Uint8Array
+                var arrayBuffer = [00,00,00,0];
+                //convert array to array buffer
+                arrayBuffer = new Uint8Array(arrayBuffer);
+                //enviar comando a dispositivo
+                socket.write(arrayBuffer);
+
+            }
+           //console.log(listDevices[i]);
+
+           
+        
+        }
+
+        //envia un comando al dispositivo
+        if(decode.comand == 0x04){
+
+            //optner id del primer parametro del decode data
+            var id = decode.data[0]-1;
+
+           // console.log(id);
+            //tipo de comando
+            var typeComand = decode.data[1];
+            
+            var valueComand = decode.data[2];
+
+            try{
+
+            
+
+                if(nuvotonProtocol.getListDevices().length > 0){
+
+                    //enviar comando a dispositivo
+                    var device = nuvotonProtocol.getDevice(id);
+
+                    if(device != null){
+
+                        var socketDevice = device.socket;
+
+                        var arrayBuffer = nuvotonProtocol.comand(typeComand,valueComand);
+
+                       
+
+                        socketDevice.write(data);
+
+                    }else{
+
+                        console.log("No found device");
+
+                        //create Uint8Array
+                        var arrayBuffer = [00,00,00,0];
+                        //convert array to array buffer
+                        arrayBuffer = new Uint8Array(arrayBuffer);
+                        //enviar comando a dispositivo
+                        socket.write(arrayBuffer);
+
+                    }
+
+
+                }
+      
+                
+
+            }catch(e){
+                //console.log(e);
             }
             
         }
-        return this.listDevices[id];
-    }
 
-    //create array buffer
-    arrayBuffer(comando){
-        
-        var arrayBuffer = [];
+        socket.end();
 
-        var com = comando.comand;
-        var data = comando.data;
+    });
 
-        arrayBuffer.push(com);
-        for(var i = 0; i < data.length; i++){
-            arrayBuffer.push(data[i]);
-        }
-
-        //conver array to array buffer
-        var arrayBuffer = new Uint8Array(arrayBuffer);
-
-        return arrayBuffer
-    }
-        //processComand 
-    processComand(decodeComand) {
-
-        var com = decodeComand.comand;
-        var data = decodeComand.data;
-
-        var DecodeObjet = {};
-
-        //si el comando es 0x02 returnar conexicon establecida
-        if(com == 0x02){
-            
-            DecodeObjet.comand = com;
-            DecodeObjet.des = "Status Network";
-            DecodeObjet.data = data;
-        }else{
-            DecodeObjet.comand = com;
-            DecodeObjet.des = "Error Comand not found";
-            DecodeObjet.data = data;
-        }
-
-        return DecodeObjet;
-
-    }
-    //decode comand
-    decodeComand(arrayBuffer){
-        var com = arrayBuffer[0];
-
-        var data = arrayBuffer.slice(1);
-        var comando = {
-            comand: com,
-            data: data
-        }
-
-    
-
-        return  this.processComand(comando);;
-    }
-
-    
-    //create comand
-    comand(command,data){
-        //crear objeto comando
-        let comando ={
-            comand:0x00,
-            data:0x00,
-        }
-
-        //validar si data es un array
-        if(Array.isArray(data)){
-            comando.data = data;
-        }
-        else{
-            
-            comando.data = [data];
-        }
+    socket.on('close', function() {
+        console.log('server disconnected');
+        nuvotonProtocol.removeMasterDevice(socket._peername.address,socket._peername.port);
+    });
 
 
-        comando.comand = command;
-    
-        
-        //retornar comando
-        return this.arrayBuffer(comando);
-    }
-
-}
-
-
-// exportar libreria de noedejs
-module.exports = NuvotonProtocol;
+}).listen(3001,function(){
+    console.log('server bound master');
+});
