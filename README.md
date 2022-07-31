@@ -78,6 +78,18 @@ Notice: carefully follow the instructions
    ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/OpenProject.gif "NK-N9H30")
 
 #### Consider the build folder where you can find the binary to use nuwriter
+    
+   ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/firmware.gif "NK-N9H30")
+   
+    ### In the following location you can find the server configuration
+
+        applications>OvniOs1>OvniOs.h
+
+    ### The TCP client points to the following address and port by default
+
+        #define IP_SERVER "192.168.100.16"
+
+        #define Port_Server 3001
 
 
 Notice: Please install ICE driver for development and [NuMicro_ARM9_Device_Database_Keil](https://www.nuvoton.com/resource-download.jsp?tp_GUID=SW1820201207155701).
