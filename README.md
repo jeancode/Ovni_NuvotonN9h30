@@ -76,8 +76,8 @@ Notice: carefully follow the instructions
 ### d) Open project in rt-thread Studio
 
    ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/OpenProject.gif "NK-N9H30")
- 
 
+#### Consider the build folder where you can find the binary to use nuwriter
 
 
 Notice: Please install ICE driver for development and [NuMicro_ARM9_Device_Database_Keil](https://www.nuvoton.com/resource-download.jsp?tp_GUID=SW1820201207155701).
@@ -112,6 +112,6 @@ Execute Address: 0x0<br>
 Enjoy!! <br>
 <br>
 
-## 4. Test
+
 
 
