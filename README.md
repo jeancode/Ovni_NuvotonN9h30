@@ -1,5 +1,10 @@
 # NK-N9H30 OVNI OS JEAN IMPERIAL
 
+In the exemplification video to observe all the processes to execute ovni  Os
+
+The Exemplification video has been delayed a few hours from the publication of this document
+
+
 ## 1. Introduction
 Nuvoton offers HMI platforms which are embedded with Nuvoton N9H MPU.  The N9H series with ARM926EJ-S core can operate at up to 300 MHz and can drive up to 1024x768 pixels in parallel port. It integrated TFT LCD controller and 2D graphics accelerator, up to 16 million colors (24-bit) LCD screen output, and provides high resolution and high chroma to deliver gorgeous display effects. It embedded up to 64 MB DDR memory, along with ample hardware storage and computing space for excellent design flexibility.
 
@@ -110,6 +115,46 @@ This will download the necessary modules and dependencies and run the server.
 
     
    ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/console.gif "NK-N9H30")
+
+    
+## Node Control
+
+
+### For node control in this project use esp32 but you can use any device that supports tcp and udp protocols
+
+the tcp client of the nodes must point to the following address and port
+
+    const char* host = "192.168.100.16";
+    const int httpPort = 3000;
+    
+    
+The specific protocol for tcp has a class that contains an 8-bit buffer processor that decodes and structures the following data
+
+    
+
+    #include "nuvoton.h"
+    
+    
+    Nuvoton nuvoton;
+    nuvotonStruct Nstruct;
+    
+    
+    Nstruct = nuvoton.comnado(Input raw tcp);
+    
+    Nstruct.id = Nstruct.id; //Contains the id assigned by the server
+    Nstruct.comandInter =  Nstruct.comandInter; ///contains a value from 0 to ff that can mean different internal commands
+    Nstruct.datos = Nstruct.datos; //this contains an 8-bit buffer with data that can be any value sent from the interface
+
+    
+Structured data can be processed to perform different actions within the microcontroller
+
+### This project has an example that is contained in the ProtocolNuvoton_Control_Arduino folder
+
+It is configured for use with an Esp32 microcontroller with the Arduino IDE.
+
+
+The file explains how the protocol works and how it can be used to perform different actions.
+
 
     
 Notice: Please install ICE driver for development and [NuMicro_ARM9_Device_Database_Keil](https://www.nuvoton.com/resource-download.jsp?tp_GUID=SW1820201207155701).
