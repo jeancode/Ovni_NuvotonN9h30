@@ -85,7 +85,8 @@ IP addresses must be configured manually and specified in the document
 
   ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/Nuvotonconfig.gif "NK-N9H30")
  
-### c) project unpack download
+### c) project unpack download 
+    (the compressed file is divided into 3 parts, you need all three parts to uncompress the project)
 
   ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/decompressImage.gif "NK-N9H30")
  
