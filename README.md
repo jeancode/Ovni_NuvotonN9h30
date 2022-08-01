@@ -3,6 +3,12 @@
 ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/RtOvAr2.png "NK-N9H30")
 
 
+
+### Presentation
+
+This project focuses on a protocol for lot control of different LOT devices across the network, using NuvotonHMI N9H30 and lvgl, a small graphical interface was developed that supports sliding windows and multitasking, although it lacks details it is functional
+
+
 # NK-N9H30 OVNI OS JEAN IMPERIAL
 
 You must click on the following image to see the video of the internet protocol functionalities
