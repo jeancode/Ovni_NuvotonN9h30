@@ -15,15 +15,17 @@ const NuvotonProtocol = require('./NuvotonProtocol');
 //const app = express();
 
 
-//create obj nuvoton protocol
+//create nuvoton protocol object
 const nuvotonProtocol = new NuvotonProtocol();
 
 
 //create array buffer
 let arrayBuffer = [10,10,101,0];
 
+//simple test
 var comandoSum = nuvotonProtocol.comand(0x02,arrayBuffer);
 
+//simple test
 var decode = nuvotonProtocol.decodeComand(comandoSum);
 
 
@@ -47,35 +49,35 @@ var server = readSocket.createServer(function(socket) {
 
     console.log("Client");
 
-    //todos los datos enviados del dispositivo slave deben conmezar con 0x16 seguido de la data
+    //received data
     socket.on('data', function(data) {
         console.log('data received: ' + data);
         
-        //determinar id de dispositivo
+        //determines if there is at least one client connected
         var idDevice = nuvotonProtocol.resumeId(encapsuleSocketData);
 
-        //verificar si exite un master conectado nuvotonProtocol.getListDevicesMaster()[0]
+        //
         if(nuvotonProtocol.getListDevicesMaster()[0] != undefined){
 
+            //check if the master is connected
             var socketMaster = nuvotonProtocol.getListDevicesMaster()[0].socket;
 
 
-            //resend comand to master
+            //By receiving this command the server understands that it must send a string of data to master client
             if(data[0] == 0x16){
                        
                 //create Uint8Array
                 var arrayBuffer = [0x16,idDevice];
 
-                //recorrerr data    y agregar al array buffer
+                //after the control commands the rest is various data
                 for(var i = 2; i < data.length; i++){
                     arrayBuffer.push(data[i]);
                 }
-            
-                //convert array to array buffer
+                //added to buffer
+
+                //send the data to the master
                 arrayBuffer = new Uint8Array(arrayBuffer);
-                //enviar comando a dispositivo
                 
-                //resend info masters
                 socketMaster.write(data);
 
             }
@@ -126,38 +128,40 @@ var server2 = readSocket.createServer(function(socket) {
 
         console.log(d);
         
-        //procesamos comando y vertificamos cuantos clientes estan contectos
+       // we process command and verify how many clients are connected
+
         var decode = nuvotonProtocol.decodeComand(data);
 
-        
+          // 03 01 number connected devices
         if(decode.comand == 0x02){
             
             console.log("Dispositives conecteds: " + nuvotonProtocol.getListNumDevices());  
-
- 
             
         }
-        // 03 01 //listar dispositivos conectados
+        
+        //list connected devices
         if(decode.comand == 0x03){
 
-           //listar ip de dispositivos
+           //list connected devices
            var listDevices = nuvotonProtocol.getListDevices();
     
-            //optner id del primer parametro del decode data
+            //optner byte of the first parameter of the buffer
+     
             var id = decode.data[0];
-
+            
+             //represents the ip
             var device =nuvotonProtocol.getDevice(id);
 
             //device != null
             if(device != null){
-                //enviar comando a dispositivo
-
-
+                //enviar comando a dispositiv
+                
+                //decode client data
                 var  ip = device.ip.split(":")[3].split(".");
                 
+                //register in the manager
                 ip.push(device.ip);
 
-                
                 //encode device ip in array buffer 0x01 ip responce data
                 var arrayBuffer = nuvotonProtocol.arrayBuffer({comand:0x01,data:ip});
 
@@ -182,35 +186,33 @@ var server2 = readSocket.createServer(function(socket) {
         
         }
 
-        //envia un comando al dispositivo
+        //send a command to the device
         if(decode.comand == 0x04){
 
-            //optner id del primer parametro del decode data
+            //optner id of the first parameter of the decode data
             var id = decode.data[0]-1;
 
            // console.log(id);
-            //tipo de comando
+            //command type
             var typeComand = decode.data[1];
-            
+            //command value
             var valueComand = decode.data[2];
 
             try{
-
-            
-
+                //check if there are connected clients
                 if(nuvotonProtocol.getListDevices().length > 0){
 
-                    //enviar comando a dispositivo
+                    //Envci
                     var device = nuvotonProtocol.getDevice(id);
 
                     if(device != null){
-
+                        
+                        //get the socket of the client according to the command of the master client
                         var socketDevice = device.socket;
-
-                        var arrayBuffer = nuvotonProtocol.comand(typeComand,valueComand);
-
+    
+                        //var arrayBuffer = nuvotonProtocol.comand(typeComand,valueComand);
                        
-
+                        //send command to the device with the resident id of the master client
                         socketDevice.write(data);
 
                     }else{
@@ -219,9 +221,11 @@ var server2 = readSocket.createServer(function(socket) {
 
                         //create Uint8Array
                         var arrayBuffer = [00,00,00,0];
+                        
                         //convert array to array buffer
                         arrayBuffer = new Uint8Array(arrayBuffer);
-                        //enviar comando a dispositivo
+                        
+                        //send command to device
                         socket.write(arrayBuffer);
 
                     }
@@ -243,6 +247,7 @@ var server2 = readSocket.createServer(function(socket) {
 
     socket.on('close', function() {
         console.log('server disconnected');
+        //allows saving which client was disconnected
         nuvotonProtocol.removeMasterDevice(socket._peername.address,socket._peername.port);
     });
 
