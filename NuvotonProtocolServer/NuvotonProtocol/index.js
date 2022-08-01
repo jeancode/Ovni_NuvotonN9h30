@@ -21,14 +21,15 @@ class NuvotonProtocol{
             this.listDevicesMaster.push(item);
         }
 
-        //recorrer lista de dispositivos
+        //loop through device list
         for(var i = 0; i < this.listDevices.length; i++){
-            //verificar si exite el dispositivo
+            //check if the device exists
             if(this.listDevicesMaster[i].port == port && this.listDevicesMaster[i].ip == ip){
-                //si existe el dispositivo no se agrega
+                //if the device exists it is not added
+
                 return;
             }else{
-                //si no existe se agrega
+                //if it does not exist it is added
                 this.listDevicesMaster.push(item);
             }
         }
@@ -38,11 +39,11 @@ class NuvotonProtocol{
     //remove master device controls
     removeMasterDevice(ip,port){
 
-        //recorrer lista de dispositivos
+        //loop through device list
         for(var i = 0; i < this.listDevicesMaster.length; i++){
-            //verificar si exite el dispositivo
+            //check if the device exists
             if(this.listDevicesMaster[i].port == port && this.listDevicesMaster[i].ip == ip){
-                //si existe el dispositivo se elimina
+                //if the device exists it is deleted
                 this.listDevicesMaster.splice(i,1);
             }
         }
@@ -60,22 +61,22 @@ class NuvotonProtocol{
         let ip = item.ip;
         item.socket = socket;
 
-        //si esta basio agregarlo
+        //if it's enough to add it
         if(this.listDevices.length == 0){
             this.listDevices.push(item);
         }
 
 
-        //recorrer lista de dispositivos
+        //loop through device list 
         for(var i = 0; i < this.listDevices.length; i++){
 
 
-            //verificar si exite el dispositivo
+            //check if the device exists
             if(this.listDevices[i].port == port && this.listDevices[i].ip == ip){
-                //si existe el dispositivo no se agrega
+                //if the device exists it is not added
                 return;
             }else{
-                //si no existe se agrega
+                //if it does not exist it is added
                 this.listDevices.push(item);
             }
         }
@@ -84,12 +85,12 @@ class NuvotonProtocol{
     }
     //resume id 
     resumeId(item){
-        //bucar id y port y resilver el id
+        //fetch id and port and retrieve the id
         var id;
         for(var i = 0; i < this.listDevices.length; i++){
-            //verificar si exite el dispositivo
+            //check if the device exists
             if(this.listDevices[i].port == item.port && this.listDevices[i].ip == item.ip){
-                //si existe el dispositivo se elimina
+                //if the device exists it is deleted
                 id = i;
             }
         }
@@ -102,11 +103,12 @@ class NuvotonProtocol{
     //remove device disconected
     removeDevice(ip,port){
 
-        //recorrer lista de dispositivos
+        //loop through device list
         for(var i = 0; i < this.listDevices.length; i++){
-            //verificar si exite el dispositivo
+            //check if the device exists
+
             if(this.listDevices[i].port == port && this.listDevices[i].ip == ip){
-                //si existe el dispositivo se elimina
+                //if the device exists it is deleted
                 this.listDevices.splice(i,1);
             }
         }
