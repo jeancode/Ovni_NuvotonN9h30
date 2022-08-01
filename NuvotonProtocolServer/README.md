@@ -1,3 +1,14 @@
+## installation instructions
+
+     https://nodejs.org/es/
+     download a version higher than 8.0 of nodejs
+
+### run the following commands
+    
+    npm install
+    node index.js
+
+
 ## Protocol Description
 
 
