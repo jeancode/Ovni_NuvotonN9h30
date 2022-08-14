@@ -13,13 +13,13 @@ This project focuses on a protocol for lot control of different LOT devices acro
 
 You must click on the following image to see the video of the internet protocol functionalities
 
-## project demo (click on the image to access the video)
+## Project demo (click on the image to access the video)
 
 [![Watch the video](https://img.youtube.com/vi/mJ_wRYdByZM/maxresdefault.jpg)](https://www.youtube.com/watch?v=mJ_wRYdByZM&ab_channel=Jdecode)
 
 ## Installation tutorial of the ovniOs project (click on the image to access the video)
 
-[![Watch the video](https://img.youtube.com/vi/4VtRCTNaM8A/maxresdefault.jpg)](https://www.youtube.com/watch?v=4VtRCTNaM8A&ab_channel=Jdecode)
+[![Watch the video](https://i.ytimg.com/vi/4VtRCTNaM8A/hqdefault.jpg)](https://www.youtube.com/watch?v=4VtRCTNaM8A&ab_channel=Jdecode)
 
 
 ## 1. Introduction
