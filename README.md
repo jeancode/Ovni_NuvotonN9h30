@@ -24,8 +24,15 @@ You must click on the following image to see the video of the internet protocol 
 ## Extra time
 In the extra time of the rt-read contest I developed an app that is compatible with the nuvoton protocol described below.
 
-![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/SimpleChatNuvoton.png "Simple Chat Nuvoton Protocol")
 
+You can find the project of the android code echo in fluter in the following folder 
+
+android_protocol_nuvoton
+
+soon I will upload the tutorial so you can understand how to link all these devices
+
+
+![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/SimpleChatNuvoton.png "Simple Chat Nuvoton Protocol")
 
 
 ![NK-N9H30](https://github.com/jeancode/Ovni_NuvotonN9h30/blob/main/NuvotonProtocolApp.PNG "Aplicaction Android In Flutter")
