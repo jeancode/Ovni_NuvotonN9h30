@@ -21,6 +21,9 @@ You must click on the following image to see the video of the internet protocol 
 
 [![Watch the video](https://i.ytimg.com/vi/4VtRCTNaM8A/hqdefault.jpg)](https://www.youtube.com/watch?v=4VtRCTNaM8A&ab_channel=Jdecode)
 
+## Extra time
+In the extra time of the rt-read contest I developed an app that is compatible with the nuvoton protocol described below.
+
 
 ## 1. Introduction
 Nuvoton offers HMI platforms which are embedded with Nuvoton N9H MPU.  The N9H series with ARM926EJ-S core can operate at up to 300 MHz and can drive up to 1024x768 pixels in parallel port. It integrated TFT LCD controller and 2D graphics accelerator, up to 16 million colors (24-bit) LCD screen output, and provides high resolution and high chroma to deliver gorgeous display effects. It embedded up to 64 MB DDR memory, along with ample hardware storage and computing space for excellent design flexibility.
